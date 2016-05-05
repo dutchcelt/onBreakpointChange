@@ -7,7 +7,7 @@
  * @arg {number} ms     - The optional delay time in milliseconds (throttling)
  * @return {function}   - The timeout function that is triggered by the event listner on each event call
  */
-let throttleEvent = (func, ms) => {
+export let throttleEvent = (func, ms) => {
   const DELAY = ms || 250;
   var timestamp;
   var timeout;
@@ -29,4 +29,3 @@ let throttleEvent = (func, ms) => {
     }
   };
 }
-
