@@ -9,21 +9,16 @@
  */
 export let throttleEvent = (func, ms) => {
   const DELAY = ms || 250;
-  var timestamp;
   var timeout;
+  var timestamp = performance.now();
   return event => {
-    var currentEventTime = +new Date;
-    var invokeFunc = () => {
-      timestamp = currentEventTime;
-      requestAnimationFrame(() => {
-        func(event)
-      });
-    }
-    if (timestamp && currentEventTime < timestamp + DELAY) {
-      clearTimeout(timeout);
-      timeout = setTimeout(invokeFunc, DELAY);
-    } else {
-      invokeFunc();
-    }
+    timeout = requestAnimationFrame( currentEventTime => {
+      if ((currentEventTime - timestamp) >= DELAY) {
+        timestamp = currentEventTime;
+        func(event);
+      } else {
+        cancelAnimationFrame(timeout);
+      }
+    });
   };
 }
